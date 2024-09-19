@@ -4,16 +4,17 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'npm install &'
+                // Use 'bat' for Windows batch commands instead of 'sh'
+                bat 'npm install'
             }
         }
         stage('Deliver') {
             steps {
-                sh 'chmod -R +rwx ./jenkins/scripts/deliver.sh &'
-                sh 'chmod -R +rwx ./jenkins/scripts/kill.sh &'
-                sh './jenkins/scripts/deliver.sh &'
-                input message: 'Finished using the web site? (Click "Proceed" to continue)'
-                sh './jenkins/scripts/kill.sh &'
+                // Use 'bat' for Windows, adjust chmod command for Windows compatibility
+                // 'chmod' doesn't work on Windows, but you might not need it if permissions are fine
+                bat 'jenkins\\scripts\\deliver.bat'
+                input message: 'Finished using the website? (Click "Proceed" to continue)'
+                bat 'jenkins\\scripts\\kill.bat'
             }
         }
     }
