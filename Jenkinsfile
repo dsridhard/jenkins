@@ -6,14 +6,18 @@ pipeline {
             steps {
                 // Use 'bat' for Windows batch commands instead of 'sh'
                 bat 'npm install'
+                // Build the Angular project and store the output in the custom location
+                bat 'npm run ng build'
             }
         }
         stage('Deliver') {
             steps {
-                // Use 'bat' for Windows, adjust chmod command for Windows compatibility
-                // 'chmod' doesn't work on Windows, but you might not need it if permissions are fine
-                bat 'npm run ng build'
-                // bat 'jenkins\\scripts\\kill.bat'
+                // Use 'bat' for Windows to move files if necessary
+                // In this example, let's assume you want to move the build files somewhere else
+                bat 'move dist\\custom-location C:\\Users\\sridhar\\Desktop\\air'
+
+                // Run your delivery script (e.g., to deploy or perform further actions)
+                bat 'jenkins\\scripts\\kill.bat'
             }
         }
     }
